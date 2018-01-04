@@ -17,6 +17,8 @@ class MonacoEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const value = this.props.value !== null ? this.props.value : this.props.defaultValue;
+    
     const context = this.props.context || window;
     if (this.props.value !== this.__current_value) {
       // Always refer to the latest value
@@ -33,6 +35,13 @@ class MonacoEditor extends React.Component {
     }
     if (prevProps.theme !== this.props.theme) {
       context.monaco.editor.setTheme(this.props.theme);
+    }
+    if (prevProps.options !== this.props.options) {
+      this.afterViewInit()
+      let child = document.getElementsByClassName('monaco-editor')[0];
+      let parend = document.getElementsByClassName('react-monaco-editor-container')[0];
+      parend.removeChild(child);
+       
     }
   }
 
