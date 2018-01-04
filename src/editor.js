@@ -53,7 +53,14 @@ class MonacoEditor extends React.Component {
     const { editorWillMount } = this.props;
     editorWillMount(monaco);
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.value == this.props.value && nextProps.theme == this.props.theme
+      && nextProps.options.fontSize == this.props.options.fontSize) {     
+      return false; 
+    } else {  
+      return true 
+  }         
+}
   editorDidMount(editor, monaco) {
     this.props.editorDidMount(editor, monaco);
     editor.onDidChangeModelContent((event) => {
